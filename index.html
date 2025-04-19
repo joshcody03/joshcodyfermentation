@@ -1,0 +1,158 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fermentation Adventure</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #0ff;
+        }
+
+        p {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        img {
+            width: 300px;
+            border: 4px solid #ff0;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .quiz-section {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #0ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fermentation 101</h1>
+    <p>Fermentation is a metabolic process where microorganisms like yeast or bacteria convert sugars into other substances like alcohol, gases, or acids. It happens without oxygen and is used in making bread, yogurt, cheese, and even biofuels. This process is essential in food production and preservation, and it has been used for thousands of years!</p>
+    <img src="79271867-aa8a-4fa4-a873-3bf8209d268c.JPG" alt="Fermentation diagram">
+
+    <div class="quiz-section" id="quiz">
+        <!-- Questions will appear here -->
+    </div>
+
+    <script>const quizData = [
+      {
+        question: "What is fermentation?",
+        options: [
+          "A process that uses oxygen to break down food",
+          "A way microorganisms convert sugars without oxygen",
+          "A method of photosynthesis",
+          "A type of metal rusting"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which microorganism is commonly used in fermentation?",
+        options: ["Mold", "Yeast", "Algae", "Virus"],
+        answer: 1
+      },
+      {
+        question: "Which food is made using fermentation?",
+        options: ["Chips", "Yogurt", "Apples", "Rice"],
+        answer: 1
+      },
+      {
+        question: "What does fermentation produce?",
+        options: ["Water and salt", "Oxygen and glucose", "Alcohol, gases, or acids", "Light and sound"],
+        answer: 2
+      },
+      {
+        question: "How long has fermentation been used by humans?",
+        options: ["100 years", "Since the 1900s", "About 500 years", "Thousands of years"],
+        answer: 3
+      }
+    ];
+
+    const quizContainer = document.getElementById('quiz');
+    let currentLevel = 0;
+
+    function loadQuestion() {
+      quizContainer.innerHTML = '';
+      const qData = quizData[currentLevel];
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question');
+
+      const title = document.createElement('h2');
+      title.textContent = `Level ${currentLevel + 1}`;
+      qDiv.appendChild(title);
+
+      const qText = document.createElement('p');
+      qText.textContent = qData.question;
+      qDiv.appendChild(qText);
+
+      qData.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(index);
+        qDiv.appendChild(btn);
+      });
+
+      quizContainer.appendChild(qDiv);
+    }
+
+    function checkAnswer(selected) {
+      const result = document.createElement('div');
+      result.classList.add('result');
+      if (selected === quizData[currentLevel].answer) {
+        result.textContent = `Level ${currentLevel + 1} complete!`;
+        result.style.color = 'yellow';
+        quizContainer.appendChild(result);
+        currentLevel++;
+        if (currentLevel < quizData.length) {
+          setTimeout(loadQuestion, 1500);
+        } else {
+          const done = document.createElement('h2');
+          done.textContent = "Congratulations, you won!";
+          done.style.color = 'yellow';
+          quizContainer.innerHTML = '';
+          quizContainer.appendChild(done);
+        }
+      } else {
+        result.textContent = `Level ${currentLevel + 1} failed.`;
+        result.style.color = 'red';
+        quizContainer.appendChild(result);
+      }
+    }
+
+    loadQuestion();</script>
+</body>
+</html>
